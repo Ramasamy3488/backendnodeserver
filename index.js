@@ -31,6 +31,10 @@ app.use(express.json()); // this is used when data / payload is sent as req body
 const TraineeRoutes = require("./routes/trainee-routes");
 app.use("/v1/api/trainees", TraineeRoutes);
 
+app.use("/", (req,res)=>{
+    res.send("Invalid Route!!!");
+});
+
 // Classes Routes
     // http://localhost:5000/v1/api/classes
 
