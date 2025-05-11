@@ -31,7 +31,7 @@ app.use(express.json()); // this is used when data / payload is sent as req body
 const TraineeRoutes = require("./routes/trainee-routes");
 app.use("/v1/api/trainees", TraineeRoutes);
 
-app.get("/", (req, res) => {
+app.get("/*", (req, res) => {
   res.send("API is working!");
 });
 
