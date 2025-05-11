@@ -12,7 +12,11 @@ app.use(express.json()); // Parses JSON payloads
 // Member Routes
 // Example: http://localhost:5000/v1/api/prcmembers
 const TraineeRoutes = require('./routes/trainee-routes');
-app.use('/v1/api/trainees', MemberRoutes);
+app.use('/v1/api/trainees', TraineeRoutes);
+
+app.use("/*", (req, res) => {
+  res.send("Invalid Route!!!");
+});
 
 // Start server
 
