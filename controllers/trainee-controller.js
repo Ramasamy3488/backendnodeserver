@@ -16,28 +16,30 @@ function readAllTrainees(req, res) {
 // Read specific Trainee by Name/Email
 async function readTrainee(req, res) {
     try {
-        const { name, email } = req.query; // use req.query if called via GET
+        const { name, email } = req.query;
 
-        // Build query dynamically
-        const searchCriteria = [];
-        if (name) searchCriteria.push({ name });
-        if (email) searchCriteria.push({ email });
-
-        if (searchCriteria.length === 0) {
+        // If no query parameters provided
+        if (!name && !email) {
             return res.status(400).json({ message: "No search criteria provided." });
         }
 
-        const trainees = await TraineesModel.find({ $or: searchCriteria });
+        // Build the query object dynamically
+        const query = {};
+        if (name) query.name = name;
+        if (email) query.email = email;
+
+        const trainees = await TraineesModel.find(query);
 
         if (trainees.length > 0) {
-            res.json(trainees);
+            return res.status(200).json(trainees);
         } else {
-            res.status(404).json({ message: "No trainees found." });
+            return res.status(404).json({ message: "No trainees found." });
         }
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message });
     }
 }
+
 // readTrainee("Tony", "tony@gmail.com");
 
 // Add a new Trainee
