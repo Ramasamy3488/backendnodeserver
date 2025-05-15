@@ -14,21 +14,19 @@ function readAllTrainees(req, res) {
 // readAllTrainees();
 
 // Read specific Trainee by Name/Email
-async function readTrainee(req, res) {
+function readTrainee(req, res) {
     try {
-        const { name, email } = req.query;
+        const { name, email } = req.body; // CHANGED from req.query to req.body
 
-        // If no query parameters provided
         if (!name && !email) {
             return res.status(400).json({ message: "No search criteria provided." });
         }
 
-        // Build the query object dynamically
         const query = {};
         if (name) query.name = name;
         if (email) query.email = email;
 
-        const trainees = await TraineesModel.find(query);
+        const trainees = TraineesModel.find(query);
 
         if (trainees.length > 0) {
             return res.status(200).json(trainees);
@@ -39,6 +37,7 @@ async function readTrainee(req, res) {
         return res.status(500).json({ error: err.message });
     }
 }
+
 
 // readTrainee("Tony", "tony@gmail.com");
 
