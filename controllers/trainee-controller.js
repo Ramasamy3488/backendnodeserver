@@ -18,7 +18,7 @@ function readTrainee(req, res) {
     try {
         let {search} = req.body;
 
-        TraineesModel.find({$or: [{"name": search}, {"email": search}]})
+        TraineesModel.find({$or: [{"name": search.name}, {"email": search.email}]})
             .then(trainees => {
                 (trainees.length > 0) 
                     ? 
